@@ -1,0 +1,79 @@
+
+<div class="container">
+    <h1>Old Request Details</h1>
+    <div class="table-container">
+        <table class="table" cellspacing="0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Request ID</th>
+                    <th>PM Name</th> 
+                    <th>Technology</th>
+                    <th>Vertical</th>
+                    <th>Training Mode</th>
+                    <th>Candidate Count</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{singleRequest.requestId}}</td>
+                    <td>{{singleRequest.pmName}}</td>
+                    <td>{{singleRequest.technologyName}}</td>
+                    <td>{{singleRequest.verticalName}}</td>
+                    <td>{{singleRequest.trainingMode}}</td>
+                    <td>{{singleRequest.candidateCount}}</td>
+                    <td>{{singleRequest.trainingStartDate}}</td>
+                    <td>{{singleRequest.trainingEndDate}}</td>
+                    <td>{{singleRequest.trainingStartTime}}</td>
+                    <td>{{singleRequest.trainingEndTime}}</td>
+                    <td>{{singleRequest.comment}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>     
+    
+<div class="container">
+    <h1>New Request Details</h1>
+    <div class="table-container">
+        <table class="table" cellspacing="0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Request ID</th>
+                    <th>PM Name</th> 
+                    <th>Technology</th>
+                    <th>Vertical</th>
+                    <th>Training Mode</th>
+                    <th>Candidate Count</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{approveRequestArray.requestId}}</td>
+                    <td>{{approveRequestArray.pmName}}</td>
+                    <td>{{approveRequestArray.technologyName}}</td>
+                    <td>{{approveRequestArray.verticalName}}</td>
+                    <td>{{approveRequestArray.trainingMode}}</td>
+                    <td>{{approveRequestArray.candidateCount}}</td>
+                    <td>{{approveRequestArray.trainingStartDate}}</td>
+                    <td>{{approveRequestArray.trainingEndDate}}</td>
+                    <td>{{approveRequestArray.trainingStartTime}}</td>
+                    <td>{{approveRequestArray.trainingEndTime}}</td>
+                    <td>{{approveRequestArray.comment}}</td>
+                </tr>
+            </tbody> 
+        </table>
+    </div>
+    <div class="button-update">
+        <button type="submit" (click) = "redirectHome(approveRequestArray)">Approve</button>
+    </div>
+</div>

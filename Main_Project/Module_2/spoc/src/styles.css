@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+:root{
+    --grid-width: 144rem;
+    --gutter-vertical: 8rem;
+    --gutter-horizontal: 6rem;
+    --gutter-vertical-sm: 3rem;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.vertical-gap{
+    margin-bottom: var(--gutter-vertical)!important;
+}

@@ -1,0 +1,15 @@
+use testdb;
+
+CREATE TABLE `module` (
+  `employee_id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `email_id` varchar(45) NOT NULL,
+  `duration` int NOT NULL,
+  `training_mode` varchar(20) NOT NULL,
+  `start_date` varchar(45) NOT NULL,
+  `end_date` varchar(45) NOT NULL,
+  `domain` varchar(100) NOT NULL,
+  `venue` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  PRIMARY KEY (`employee_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;

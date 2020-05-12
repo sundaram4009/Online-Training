@@ -1,0 +1,393 @@
+<div class="container" *ngIf = "!showUpdateForm && !showApprovalForm">
+    <h1>Request Details</h1>
+    <div class="table-container">
+        <table class="table" cellspacing="0">
+            <thead class="table-dark"> 
+                <tr>
+                    <th>Request ID</th>
+                    <th>PM Name</th>
+                    <th>Technology</th>
+                    <th>Vertical</th>
+                    <th>Training Mode</th>
+                    <th>Candidate Count</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf = "singleRequest.requestStatus == '0'">
+                    <td>{{singleRequest.requestId}}</td>
+                    <td>{{singleRequest.pmName}}</td>
+                    <td>{{singleRequest.technologyName}}</td>
+                    <td>{{singleRequest.verticalName}}</td>
+                    <td>{{singleRequest.trainingMode}}</td>
+                    <td>{{singleRequest.candidateCount}}</td>
+                    <td>{{singleRequest.trainingStartDate}}</td>
+                    <td>{{singleRequest.trainingEndDate}}</td>
+                    <td>{{singleRequest.trainingStartTime}}</td>
+                    <td>{{singleRequest.trainingEndTime}}</td>
+                    <td>{{singleRequest.comment}}</td>
+                </tr>
+                <tr *ngIf = "approveRequestArray !=null && approveRequestArray.requestStatus == '3'">
+                    <td>{{approveRequestArray.requestId}}</td>
+                    <td>{{approveRequestArray.pmName}}</td>
+                    <td>{{approveRequestArray.technologyName}}</td>
+                    <td>{{approveRequestArray.verticalName}}</td>
+                    <td>{{approveRequestArray.trainingMode}}</td>
+                    <td>{{approveRequestArray.candidateCount}}</td>
+                    <td>{{approveRequestArray.trainingStartDate}}</td>
+                    <td>{{approveRequestArray.trainingEndDate}}</td>
+                    <td>{{approveRequestArray.trainingStartTime}}</td>
+                    <td>{{approveRequestArray.trainingEndTime}}</td>
+                    <td>{{approveRequestArray.comment}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="button-update">
+        <button type="submit" (click) = "approvalForm()">Assign</button>
+    </div>
+    <div class="button-update">
+        <button type="submit" (click) = "editForm()" *ngIf = "singleRequest.requestStatus == '0'">Update</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="container-left">
+        <h1>Available Trainers</h1>
+        <div class="table-container">
+            <table class="table table-scroll vertical-gap" cellspacing="0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Trainer ID</th>
+                        <th>Name</th>
+                        <th>Contact No.</th>
+                        <th>Available from Date</th>
+                        <th>Available till Date</th>
+                        <th>Available from Time</th>
+                        <th>Available till Time</th>
+                        <th *ngIf = "showApprovalForm">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let t of techTrainers">
+                        <td>{{t.trainerId}}</td>
+                        <td>{{t.trainerName}}</td>
+                        <td>{{t.contact}}</td>
+                        <td>{{t.trainerAvailFromDate}}</td>
+                        <td>{{t.trainerAvailTillDate}}</td>
+                        <td>{{t.trainerAvailFromTime}}</td>
+                        <td>{{t.trainerAvailTillTime}}</td>                        
+                        <td *ngIf = "showApprovalForm"><input id = "trainer"
+                            type="checkbox" 
+                            (name)="t"
+                            [disabled]= "isCheckedTrainer && (isCheckedTrainerName!=t)"
+                            (change)= "selectCheckboxTrainer($event,t)"
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="(singleRequest.trainingMode!='online' && approveRequestArray ==null) || (approveRequestArray !=null ) && (approveRequestArray.trainingMode!='online')">
+        <h1>Available Rooms</h1>
+        <div class="table-container">
+            <table class="table table-scroll" cellspacing="0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Id</th>
+                        <th>Room Number</th>
+                        <th>Capacity</th>
+                        <th>Available from Date</th>
+                        <th>Available till Date</th>
+                        <th>Available from Time</th>
+                        <th>Available till Time</th>
+                        <th *ngIf = "showApprovalForm">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let r of rooms">
+                        <td>{{r.roomId}}</td>
+                        <td>{{r.roomNo}}</td>
+                        <td>{{r.capacity}}</td>
+                        <td>{{r.roomAvailFromDate}}</td>
+                        <td>{{r.roomAvailTillDate}}</td>
+                        <td>{{r.roomAvailFromTime}}</td>
+                        <td>{{r.roomAvailTillTime}}</td>           
+                        <td *ngIf = "showApprovalForm"><input id = "trainer"
+                            type="checkbox" 
+                            (name)="r"
+                            [disabled]= "isCheckedRoom && (isCheckedRoomName!=r)"
+                            (change)= "selectCheckboxRoom($event,r)"
+                            >
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> 
+        </div>   
+    </div>
+</div>
+<div class="container" *ngIf = "showUpdateForm">
+    <div class="container-right" >
+        <h1>Update Request</h1>
+        <form class="form" id="form" #requestForm = "ngForm" (ngSubmit)="updateRequest()" novalidate>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="request_id">Request Id</label>
+                </div>                    
+                <input class="disabled" type="number" name="Reuest Id" id="request_id" [(ngModel)]="singleRequest.requestId" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="pm_name">PM Name</label>
+                </div>                    
+                <input class="disabled" type="text" name="pm_name" id="pmName" [(ngModel)] = "singleRequest.pmName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="trainer_name">Technology</label>
+                </div>                    
+                <input class="disabled" type="text" name="techName" id="trainer_name" [(ngModel)] = "singleRequest.technologyName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="tech_name">Vertical</label>
+                </div>                    
+                <input class="disabled" type="text" name="verticalName" id="tech_name" [(ngModel)] = "singleRequest.verticalName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="train_mode">Training Mode</label>
+                </div>                    
+                <input type="text" name="trainingMode" id="train_mode" [(ngModel)] = "singleRequest.trainingMode">
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="count">Candidate Count</label>
+                </div>                    
+                <input class="disabled" type="number" name="candidateCount" id="count" [(ngModel)] = "singleRequest.candidateCount" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="start_date">Start Date</label>
+                </div>                    
+                <input type="date" name="startDate" id="start_date" [(ngModel)] = "singleRequest.trainingStartDate">
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="end_date">End Date</label>
+                </div>                    
+                <input type="date" name="endDate" id="end_date" [(ngModel)] = "singleRequest.trainingEndDate">
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="start_time">Start Time</label>
+                </div>                    
+                <input type="time" name="startTime" id="start_time" [(ngModel)] = "singleRequest.trainingStartTime">
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="end_time">End Time</label>
+                </div>                    
+                <input type="time" name="endTime" id="end_time" [(ngModel)] = "singleRequest.trainingEndTime">
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="comments">Comments</label>
+                </div>                    
+                <input type="text" name="comments" id="comments" [(ngModel)] = "singleRequest.comment">
+            </div>
+            <div class="form-grp">         
+                <button type="submit">Submit &nbsp;&nbsp;&nbsp;&rarr;</button>
+                <button type="submit" (click) = "cancel()">Go Back &nbsp;&nbsp;&nbsp;&#10550;</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container" *ngIf = "showApprovalForm && isCheckedTrainer">
+    <div class="container-right" >
+        <h1>Processed Request</h1>
+        <div class="form-alert" *ngIf = "showMsg">
+            <p>Successfully assigned trainer and room!!</p>
+        </div>
+        <form class="form" id="form" #finalForm = "ngForm"  *ngIf="singleRequest.requestStatus =='0'" (ngSubmit)="finalRequest()" novalidate>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="request_id">Request Id</label>
+                </div>                    
+                <input class="disabled" type="number" name="Reuest Id" id="request_id" [(ngModel)]="singleRequest.requestId" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="pm_name">PM Name</label>
+                </div>                    
+                <input class="disabled" type="text" name="pm_name" id="pmName" [(ngModel)] = "singleRequest.pmName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="trainer_name">Technology</label>
+                </div>                    
+                <input class="disabled" type="text" name="techName" id="trainer_name" [(ngModel)] = "singleRequest.technologyName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="tech_name">Vertical</label>
+                </div>                    
+                <input class="disabled" type="text" name="verticalName" id="tech_name" [(ngModel)] = "singleRequest.verticalName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="train_mode">Training Mode</label>
+                </div>                    
+                <input class="disabled" type="text" name="trainingMode" id="train_mode" [(ngModel)] = "singleRequest.trainingMode" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="vertical">Trainer</label>
+                </div>                    
+                <input class="disabled" type="text" name="trainer" id="trainer" [(ngModel)] = "singleRequest.trainerName" disabled>
+            </div>
+
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="room">Room Number</label>
+                </div>                    
+                <input class="disabled" type="number" name="roomNo" id="room" [(ngModel)] = "singleRequest.roomNo" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="count">Candidate Count</label>
+                </div>                    
+                <input class="disabled" type="number" name="candidateCount" id="count" [(ngModel)] = "singleRequest.candidateCount" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="start_date">Start Date</label>
+                </div>                    
+                <input class="disabled" type="date" name="startDate" id="start_date" [(ngModel)] = "singleRequest.trainingStartDate" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="end_date">End Date</label>
+                </div>                    
+                <input class="disabled" type="date" name="endDate" id="end_date" [(ngModel)] = "singleRequest.trainingEndDate" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="start_time">Start Time</label>
+                </div>                    
+                <input class="disabled" type="time" name="startTime" id="start_time" [(ngModel)] = "singleRequest.trainingStartTime" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="end_time">End Time</label>
+                </div>                    
+                <input class="disabled" type="time" name="endTime" id="end_time" [(ngModel)] = "singleRequest.trainingEndTime" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="comments">Comments</label>
+                </div>                    
+                <input class="disabled" type="text" name="comments" id="comments" [(ngModel)] = "singleRequest.comment" disabled>
+            </div>
+            <div class="form-grp">         
+                <button type="submit">Submit &nbsp;&nbsp;&nbsp;&rarr;</button>
+                <button type="submit" (click) = "cancel()">Go Back &nbsp;&nbsp;&nbsp;&#10550;</button>
+            </div>
+        </form>
+        <form class="form" id="form" #finalForm = "ngForm" *ngIf="approveRequestArray !=null && approveRequestArray.requestStatus =='3'" (ngSubmit)="finalApprovedRequest()" novalidate>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="request_id">Request Id</label>
+                </div>                    
+                <input class="disabled" type="number" name="Reuest Id" id="request_id" [(ngModel)]="approveRequestArray.requestId" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="pm_name">PM Name</label>
+                </div>                    
+                <input class="disabled" type="text" name="pm_name" id="pmName" [(ngModel)] = "approveRequestArray.pmName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="trainer_name">Technology</label>
+                </div>                    
+                <input class="disabled" type="text" name="techName" id="trainer_name" [(ngModel)] = "approveRequestArray.technologyName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="tech_name">Vertical</label>
+                </div>                    
+                <input class="disabled" type="text" name="verticalName" id="tech_name" [(ngModel)] = "approveRequestArray.verticalName" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="train_mode">Training Mode</label>
+                </div>                    
+                <input class="disabled" type="text" name="trainingMode" id="train_mode" [(ngModel)] = "approveRequestArray.trainingMode" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="vertical">Trainer</label>
+                </div>                    
+                <input class="disabled" type="text" name="trainer" id="trainer" [(ngModel)] = "approveRequestArray.trainerName" disabled>
+            </div>
+
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="room">Room Number</label>
+                </div>                    
+                <input class="disabled" type="number" name="roomNo" id="room" [(ngModel)] = "approveRequestArray.roomNo" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="count">Candidate Count</label>
+                </div>                    
+                <input class="disabled" type="number" name="candidateCount" id="count" [(ngModel)] = "approveRequestArray.candidateCount" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="start_date">Start Date</label>
+                </div>                    
+                <input class="disabled" type="date" name="startDate" id="start_date" [(ngModel)] = "approveRequestArray.trainingStartDate" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="end_date">End Date</label>
+                </div>                    
+                <input class="disabled" type="date" name="endDate" id="end_date" [(ngModel)] = "approveRequestArray.trainingEndDate" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="start_time">Start Time</label>
+                </div>                    
+                <input class="disabled" type="time" name="startTime" id="start_time" [(ngModel)] = "approveRequestArray.trainingStartTime" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="end_time">End Time</label>
+                </div>                    
+                <input class="disabled" type="time" name="endTime" id="end_time" [(ngModel)] = "approveRequestArray.trainingEndTime" disabled>
+            </div>
+            <div class="form-grp">
+                <div class="input-lable">
+                    <label for="comments">Comments</label>
+                </div>                    
+                <input class="disabled" type="text" name="comments" id="comments" [(ngModel)] = "approveRequestArray.comment" disabled>
+            </div>
+            <div class="form-grp">         
+                <button type="submit">Submit &nbsp;&nbsp;&nbsp;&rarr;</button>
+                <button type="submit" (click) = "cancel()">Go Back &nbsp;&nbsp;&nbsp;&#10550;</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

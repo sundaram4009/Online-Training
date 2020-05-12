@@ -1,0 +1,61 @@
+<div class="row-container">
+    <h1>Training Requests</h1>
+    <div *ngFor = "let req of pendingRequests; let i =index" class="row border-round">
+        <div class="row-content">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Request No.{{req.requestId}}</td>
+                    </tr>
+                    <tr>
+                        <td>Vertical: {{req.verticalName}}</td>                     
+                    </tr>
+                    <tr>
+                        <td>Technology: {{req.technologyName}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input 
+                                type=button 
+                                value="View Request" 
+                                (click) = "newData(req)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="approvedRequests.length !='0'">
+    <h1>Approved Requests</h1>
+    <div *ngFor = "let req of approvedRequests; let i =index" class="row border-round">
+        <div class="row-content">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Request No.{{req.requestId}}</td>
+                    </tr>
+                    <tr>
+                        <td>Vertical: {{req.verticalName}}</td>                     
+                    </tr>
+                    <tr>
+                        <td>Technology: {{req.technologyName}}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input 
+                                type=button 
+                                value="View Request" 
+                                (click) = "newData(req)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+
+

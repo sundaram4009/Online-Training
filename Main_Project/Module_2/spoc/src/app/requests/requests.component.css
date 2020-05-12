@@ -1,0 +1,157 @@
+.row-container{
+    width: 144rem;
+    padding-left: calc(2 * var(--gutter-horizontal));
+	display: inline-block;
+	vertical-align: top;
+	/* max-width: var(--gutter-width); */
+	/* background-color: #f1f1f1; */
+	/*color: white;*/
+}
+
+.row-container h1{
+	text-align: left;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 3.2rem;
+	/*margin-top: 10px;*/
+    /* margin-top: calc(2 * var(--gutter-vertical)); */
+    /* margin: var(--gutter-vertical-sm)  var(--gutter-horizontal); */
+    margin-left: var(--gutter-horizontal);
+    margin-top: var(--gutter-vertical);
+    margin-bottom: var(--gutter-vertical-sm);
+
+}
+
+.row{
+	display: inline-block;
+	vertical-align: top;
+	width: calc((80% - 3*var(--gutter-horizontal))/4);
+    margin-bottom: var(--gutter-vertical-sm);
+    margin-left: var(--gutter-horizontal);
+    border-radius: .7rem;
+	overflow-x: hidden;
+	transition: .3s;
+    background-color: rgb(243, 242, 255);
+    cursor: pointer;
+}
+
+/* .row-content{
+    background-color: rgb;
+} */
+
+.table{
+    border-collapse: collapse;
+    width: 100%;
+} 
+
+.table td{
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: .8rem 1rem;
+}
+
+/* Card border & hover property start */
+.border-round{
+    border-radius: .7rem;
+    box-shadow: 1px 3px 1px rgb(108, 99, 255);
+    border: none;
+    transition: all .2s;
+}
+
+.border-round:hover{
+    border: 1px solid rgb(108, 99, 255);
+    box-shadow: none;
+    transform: scale(1.05);
+
+}
+/* Card hover property end */
+
+input{
+    padding: .5rem 0;
+    padding-left: .5rem;
+    font-size: 1.5rem;
+    outline: none;
+    border: none;
+    background-color: rgb(243, 242, 255);
+}
+
+/* Input button styling */
+input[type="button"]{
+    padding: .5rem 2rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #ffffff;
+    background-color: rgb(108, 99, 255);
+    width: 80%;
+    margin: 0 auto;
+    border: none;
+    outline: none;
+    border-radius: .7rem;
+    cursor: pointer;
+}
+/* input[type="button"]:hover{
+    cursor: pointer;
+} */
+@media (max-width: 1200px) {
+    /* Selectors and styles affecting screens UP TO 979px (Desktop) */
+    html{
+        font-size: 62.5%;
+    }
+
+    .row-container{
+        padding-left: 0;
+    }
+
+    .row-container h1{
+        margin-left: var(--gutter-horizontal);
+        /* margin-right: 2 * var(--gutter-horizontal); */
+    }
+    .row{
+        width: calc(29% - 2 * var(--gutter-horizontal)/3);
+        /* margin-left: 2 * var(--gutter-horizontal); */
+    }
+  }
+  
+  @media (max-width: 900px) {
+      /* Selectors and styles affecting screens UP TO 767px (Tablet) */
+    html{
+        font-size: 56.25%;
+    }
+
+    .row-container{
+        padding-left: 0;
+    }
+
+    .row-container h1{
+        margin-left: var(--gutter-horizontal);
+        margin-right: 0;
+    }
+    .row{
+        width: calc(40% - var(--gutter-horizontal)/2);
+        /* margin-left: 10% */
+    }
+
+  }
+  
+  @media (max-width: 600px) {
+	  /* Selectors and styles affecting screens UP TO 480px (Phone) */
+    html{
+        font-size: 50%;
+    }
+
+    .row-container{
+        padding-left: 0;
+    }
+
+    .row-container h1{
+        margin-left: var(--gutter-horizontal);
+        margin-right: 0;
+    }
+    .row{
+        width: 80%;
+        margin-left: 10%
+    }
+
+
+  }
